@@ -166,5 +166,103 @@ x is called the percentile rank of x
 If a value x has a percentile rank of p%
 , we say that x is the pth percentile. For instance, if 32 has a percentile rank of 57%, we say that 32 is the 57th percentile.
 
-Frequency distribution tables can be grouped in class intervals to form grouped frequency distribution tables. As a rule of thumb, 10 is a good number of class intervals to choose because it offers a good balance between information and comprehensibility.
+Frequency distribution tables can be grouped in class intervals to form grouped frequency distribution tables. 
+As a rule of thumb, 10 is a good number of class intervals to choose because it offers a good balance between information and comprehensibility.
+
+
+In a skewed distribution:
+
+- The values pile up toward the end or the starting point of the range, making up the body of the distribution.
+- Then the values decrease in frequency toward the opposite end, forming the tail of the distribution.
+
+
+If the tail points to the left, then the distribution is said to be left skewed. When it points to the left, the tail points at the same time in the direction of negative numbers, and for this reason the distribution is sometimes also called negatively skewed.
+
+If the tail points to the right, then the distribution is right skewed. The distribution is sometimes also said to be positively skewed because the tail points in the direction of positive numbers.
+
+
+
+If the shape of the histogram is symmetrical, then we say that we have a symmetrical distribution.
+
+A very common symmetrical distribution is one where the values pile up in the middle and gradually decrease in frequency toward both ends of the histogram.
+ This pattern is specific to what we call a normal distribution (also called Gaussian distribution).
+
+Another common symmetrical distribution is one where the values are distributed uniformly across the entire range. This pattern is specific to a uniform distribution.
+
+
+### Visualizing Frequency Distributions
+**Vertical bar chart:**
+
+`ggplot(data = df, 
+       aes(x = col)) +
+  geom_bar()`
+
+**Horizontal bar chart**
+
+`ggplot(data = df, 
+       aes(x = col)) +
+  geom_bar() +
+  coord_flip()`
+
+**Proportions with bar charts**
+
+`ggplot(data = df,
+       aes(x = col, 
+             y = ..prop.., 
+             group = 1)) +
+  geom_bar()`
+
+**Percentages with bar charts**
+
+`ggplot(data = df, 
+       aes(x = col, 
+             y = ..prop.. * 100, 
+             group = 1)) +
+  geom_bar()`
+
+**Horizontal stacked bar chart from summary table of proportions:**
+
+`proportions <- df %>% 
+  group_by(col) %>% 
+  summarize(Prop = n() / nrow(df))
+ggplot(data = proportions, 
+              aes(x = "", y = Prop, fill = col)) + 
+  geom_bar(stat = "identity", width = 0.25) +
+  coord_flip()`
+
+**Simple pie chart for exploratory data analysis:**
+
+`ggplot(data = proportions, 
+              aes(x = "", y = Prop, fill = col)) + 
+  geom_bar(stat = "identity") +
+  coord_polar(theta = "y")`
+
+**Histogram - default number of bins (30):**
+
+`ggplot(data = df, 
+       aes(x = col)) +
+  geom_histogram()`
+
+**10 bins**
+
+`ggplot(data = df,
+       aes(x = col)) +
+  geom_histogram(bins = 10)`
+
+**Aligning 10 bins with range of values present for a single variable**
+
+`custom_binwidth <- (max(df$col) - min(wdf$col)) / 10
+ggplot(data = df, 
+       aes(x = col)) +
+  geom_histogram(boundary = min(df$col), 
+                 binwidth = custom_binwidth)`
+
+
+To visualize frequency distributions for nominal and ordinal variables, we can use:
+
+- Bar chart.
+- Pie charts.
+
+To visualize frequency distributions for variables measured on an interval or ratio scale, we can use a histogram.
+
 

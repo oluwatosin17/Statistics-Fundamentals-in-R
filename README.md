@@ -146,3 +146,25 @@ df %>%
   group_by(categories) %>% 
   summarize(Freq = n()) %>% 
   mutate(Percentage = Freq / nrow(df) * 100)`
+
+
+A table that shows the frequency for each unique value in a distribution is called a frequency distribution table.
+
+The frequencies can be expressed as:
+
+- Absolute counts (absolute frequencies).
+- Proportions or percentages (relative frequencies).
+
+Quantiles provide us with the value of a random variable for a specified probability.
+
+The three percentiles that divide the distribution in four equal parts are also known as quartiles. The lower quartile is the value of the quantile at probability 0.25.
+
+The percentage of values that are equal or less than a value 
+x is called the percentile rank of x
+. For instance, if the percentile rank of a value of 32 is 57%, 57% of the values are equal to or less than 32.
+
+If a value x has a percentile rank of p%
+, we say that x is the pth percentile. For instance, if 32 has a percentile rank of 57%, we say that 32 is the 57th percentile.
+
+Frequency distribution tables can be grouped in class intervals to form grouped frequency distribution tables. As a rule of thumb, 10 is a good number of class intervals to choose because it offers a good balance between information and comprehensibility.
+

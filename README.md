@@ -64,6 +64,85 @@ One way to simplify this dataset is to select a variable,
 
 
 
+Because proportions and percentages are relative to the total number
+ of instances in some set of data, they are called relative frequencies. 
+In contrast, the frequencies we've been working with so far are called absolute frequencies because they 
+are absolute counts and don't relate to the total number of instances.
 
 
+**Generating a frequency distribution table for a column (col):**
 
+`df %>%
+  group_by(col) %>%
+  summarize(Freq = n())`
+
+**Sorting the values of frequency distribution table in ascending order (default):**
+
+`df %>%
+  group_by(col) %>%
+  summarize(Freq = n())`
+
+**Sorting in ascending order (being explicit):**
+
+`df %>%
+  group_by(col) %>%
+  summarize(Freq = n()) %>% 
+  arrange(col)`
+
+**Sorting in descending order:**
+
+`df %>%
+  group_by(col) %>%
+  summarize(Freq = n()) %>% 
+  arrange(desc(col))`
+
+**Finding proportions and percentages in a frequency distribution table:**
+
+`df %>%
+  group_by(col) %>%
+  summarize(Freq = n()) %>% 
+  mutate(Prop = Freq / nrow(df)) %>%
+  mutate(Percentage = Freq / nrow(df) * 100) %>% 
+  arrange(desc(Freq))`
+
+**Finding the percentile rank of a value (score) in a column:**
+
+`mean(df$col <= value) * 100`
+
+**Finding percentiles - only the quartiles:**
+
+`quantile(df$col)`
+
+**Finding any percentile we designate:**
+
+`quantile(df$col, 
+            probs = c(0, 0.1, 0.25, 0.33, 0.5, 0.66, 0.75, 0.9, 1))`
+
+**Generate percentiles for each value in a dataframe:**
+
+`df %>% 
+  mutate(cume_dist_col = cume_dist(col))`
+
+**Generating a grouped frequency table:**
+
+`df <- df %>% 
+  mutate(categories = cut(col, breaks = 5, dig.lab = 4))
+df %>% 
+  group_by(categories) %>% 
+  summarize(Freq = n())`
+
+**Generating a grouped frequency table with custom class intervals:**
+
+`df <- df %>% 
+  mutate(categories = 
+           cut(col, 
+               breaks = c(0, 150, 300, 450, 
+               600, 750, 900, 1050), 
+               dig.lab = 4))`
+
+**Showing frequency and percentage**
+
+`df %>% 
+  group_by(categories) %>% 
+  summarize(Freq = n()) %>% 
+  mutate(Percentage = Freq / nrow(df) * 100)`
